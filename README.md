@@ -347,6 +347,11 @@ Encrypted message: [120, 247, 247, 153, 149]
 Decrypted message: hello
 ```
 
+Note: 
+Changed the encryption and decryption process to use binary exponentiation instead of pow() function for modular exponentiation.
+Used UTF-8 encoding for the plaintext characters to handle different types of characters.
+Added comments to explain the changes made.
+
 ## I wonder how it would look if we wanted to write the same code in javascript scripting language?
 ```javascript
 /*
