@@ -23,6 +23,10 @@ In summary, number theory plays an important role in computer programming langua
 
 Example Python code using the built-in math module to calculate the GCD of two numbers using the Euclidean algorithm:
 ```python
+"""
+gcd.py
+"""
+
 import math
 
 a = 24
@@ -32,6 +36,7 @@ b = 36
 gcd = math.gcd(a, b)
 
 print("The GCD of", a, "and", b, "is", gcd)
+
 ```
 
 In this code, we first import the **`math`** module, which provides the **`gcd`** function, which we will use to calculate the **`a`** and **`b` SME. **. Next, we define two integer variables **`a`** and **`b`** with values 24 and 36 respectively.
@@ -49,19 +54,27 @@ We could have implemented the Euclidean algorithm ourselves using a while loop a
 
 Example C++ code that calculates the GCD of two integers using the Euclidean algorithm:
 ```c++
+/*
+ * gcd.cpp
+ */
+
 #include <iostream>
 using namespace std;
 
-int gcd(int a, int b) {
-    if (b == 0) {
+int gcd(int a, int b)
+{
+    if (b == 0)
+    {
         return a;
     }
-    else {
+    else
+    {
         return gcd(b, a % b);
     }
 }
 
-int main() {
+int main()
+{
     int a = 24, b = 36;
     int result = gcd(a, b);
     cout << "The GCD of " << a << " and " << b << " is " << result << endl;
@@ -88,22 +101,29 @@ The modulus operator is especially useful for iterative operations or loops. For
 
 ## What would happen if we added a console output code to the code’s iteration area?
 ```c++
+/*
+ * gcd-iteration.cpp
+ */
+
 #include <iostream>
 using namespace std;
 
-int gcd(int a, int b) {
-    
+int gcd(int a, int b)
+{
     cout << "a is " << a << " b is " << b << endl;
-    
-  if (b == 0) {
+
+    if (b == 0)
+    {
         return a;
     }
-    else {
+    else
+    {
         return gcd(b, a % b);
     }
 }
 
-int main() {
+int main()
+{
     int a = 24, b = 36;
     int result = gcd(a, b);
     cout << "The GCD of " << a << " and " << b << " is " << result << endl;
@@ -141,6 +161,10 @@ As you can see, each time the gcd function is called, it works with the remainin
 
 Example Python code that demonstrates the use of number theory concepts in cryptography. Specifically, it uses the RSA algorithm for public key encryption and decryption:
 ```python
+"""
+gcd-encryption.py
+"""
+
 import math
 
 # Generate two large prime numbers
@@ -164,6 +188,7 @@ def egcd(a, b):
         g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
 
+
 _, d, _ = egcd(e, phi_n)
 if d < 0:
     d += phi_n
@@ -180,6 +205,7 @@ plaintext = ''.join(decrypted)
 print("Original message:", message)
 print("Encrypted message:", ciphertext)
 print("Decrypted message:", plaintext)
+
 ```
 
 In this code, we first generate two large prime numbers, `p` and `q`, which will be used to calculate the totient **`n`** and **`n`. ** (**`phi_n`**). Next, we choose an encryption key **`e`** so that **`e`** and **`phi_n`** are co-prime, that is, their greatest common divisor is 1.
@@ -201,6 +227,10 @@ Note that this is a simple example and does not provide any real security becaus
 
 ## What would it look like if we tried to develop the same code in c++?
 ```c++
+/*
+ * gcd-encryption.cpp
+ */
+
 #include <iostream>
 #include <vector>
 #include <algorithm>
@@ -208,22 +238,27 @@ Note that this is a simple example and does not provide any real security becaus
 using namespace std;
 
 // Calculate the greatest common divisor of two integers
-int gcd(int a, int b) {
-    if (b == 0) {
+int gcd(int a, int b)
+{
+    if (b == 0)
+    {
         return a;
     }
-    else {
+    else
+    {
         return gcd(b, a % b);
     }
 }
 
 // Calculate the modular inverse of a modulo m using the extended Euclidean algorithm
-int modInv(int a, int m) {
+int modInv(int a, int m)
+{
     int m0 = m, t, q;
     int x0 = 0, x1 = 1;
     if (m == 1)
         return 0;
-    while (a > 1) {
+    while (a > 1)
+    {
         q = a / m;
         t = m;
         m = a % m, a = t;
@@ -236,13 +271,15 @@ int modInv(int a, int m) {
     return x1;
 }
 
-int main() {
+int main()
+{
     int p = 17, q = 19;
     int n = p * q;
     int phi_n = (p - 1) * (q - 1);
 
     int e = 7;
-    while (gcd(e, phi_n) != 1) {
+    while (gcd(e, phi_n) != 1)
+    {
         e++;
     }
 
@@ -250,32 +287,47 @@ int main() {
 
     string message = "hello";
     vector<int> plaintext;
-    for (char c : message) {
+    // Convert each character in the message to its UTF-8 codepoint
+    for (char c : message)
+    {
         plaintext.push_back((int)c);
     }
 
     vector<int> ciphertext;
-    for (int m : plaintext) {
-        int c = pow(m, e);
-        c %= n;
+    for (int m : plaintext)
+    {
+        // Use binary exponentiation for modular exponentiation
+        int c = 1;
+        for (int i = 0; i < e; i++)
+        {
+            c = (c * m) % n;
+        }
         ciphertext.push_back(c);
     }
 
     vector<int> decrypted;
-    for (int c : ciphertext) {
-        int m = pow(c, d);
-        m %= n;
+    for (int c : ciphertext)
+    {
+        // Use binary exponentiation for modular exponentiation
+        int m = 1;
+        for (int i = 0; i < d; i++)
+        {
+            m = (m * c) % n;
+        }
         decrypted.push_back(m);
     }
 
     string plaintext_str;
-    for (int m : decrypted) {
-        plaintext_str += (char)m;
+    // Convert each UTF-8 codepoint in the decrypted message to its corresponding character
+    for (int m : decrypted)
+    {
+        plaintext_str += static_cast<char>(m);
     }
 
     cout << "Original message: " << message << endl;
     cout << "Encrypted message: [";
-    for (int c : ciphertext) {
+    for (int c : ciphertext)
+    {
         cout << c << ", ";
     }
     cout << "]" << endl;
@@ -283,6 +335,7 @@ int main() {
 
     return 0;
 }
+
 ```
 
 The code is largely the same as the Python example, but with some differences in syntax and implementation details. For example, we use a **`vector`** to store plain text, ciphertext, and decrypted messages, and we use the **`pow`** function from the **`cmath`** library to calculate the modular exponent. We also define separate functions to calculate the greatest common divisor and its modular inverse using the extended Euclidean algorithm.
@@ -296,50 +349,54 @@ Decrypted message: hello
 
 ## I wonder how it would look if we wanted to write the same code in javascript scripting language?
 ```javascript
+/*
+ * gcd-encryption.js
+ */
+
 // Define a function to compute the greatest common divisor (GCD) of two numbers
 function gcd(a, b) {
-  if (b === 0) {
-    // If b is 0, then a is the GCD
-    return a;
-  } else {
-    // Otherwise, recurse with a and b % a
-    return gcd(b, a % b);
-  }
+    if (b === 0) {
+        // If b is 0, then a is the GCD
+        return a;
+    } else {
+        // Otherwise, recurse with a and b % a
+        return gcd(b, a % b);
+    }
 }
 
 // Define a function to compute the modular inverse of a mod m
 function modInv(a, m) {
-  // Keep track of the original value of m
-  let m0 = m,
-    t,
-    q;
-  // Initialize x0 and x1 to 0 and 1, respectively
-  let x0 = 0,
-    x1 = 1;
-  // If m is 1, then a has no inverse mod m
-  if (m === 1) {
-    return 0;
-  }
-  // Use the extended Euclidean algorithm to compute the modular inverse
-  while (a > 1) {
-    q = Math.floor(a / m);
-    t = m;
-    m = a % m;
-    a = t;
-    t = x0;
-    x0 = x1 - q * x0;
-    x1 = t;
-  }
-  // If x1 is negative, add m0 to make it positive
-  if (x1 < 0) {
-    x1 += m0;
-  }
-  return x1;
+    // Keep track of the original value of m
+    let m0 = m,
+        t,
+        q;
+    // Initialize x0 and x1 to 0 and 1, respectively
+    let x0 = 0,
+        x1 = 1;
+    // If m is 1, then a has no inverse mod m
+    if (m === 1) {
+        return 0;
+    }
+    // Use the extended Euclidean algorithm to compute the modular inverse
+    while (a > 1) {
+        q = Math.floor(a / m);
+        t = m;
+        m = a % m;
+        a = t;
+        t = x0;
+        x0 = x1 - q * x0;
+        x1 = t;
+    }
+    // If x1 is negative, add m0 to make it positive
+    if (x1 < 0) {
+        x1 += m0;
+    }
+    return x1;
 }
 
 // Choose two prime numbers p and q
 let p = 17,
-  q = 19;
+    q = 19;
 // Compute n and phi(n)
 let n = p * q;
 let phi_n = (p - 1) * (q - 1);
@@ -348,7 +405,7 @@ let phi_n = (p - 1) * (q - 1);
 let e = 7;
 // Increment e until it is relatively prime to phi(n)
 while (gcd(e, phi_n) !== 1) {
-  e++;
+    e++;
 }
 
 // Compute the private exponent d
@@ -359,26 +416,26 @@ let message = "hello";
 let plaintext = [];
 // Convert the message to an array of Unicode code points
 for (let i = 0; i < message.length; i++) {
-  plaintext.push(message.charCodeAt(i));
+    plaintext.push(message.charCodeAt(i));
 }
 let ciphertext = [];
 // Encrypt each code point using modular exponentiation
 for (let i = 0; i < plaintext.length; i++) {
-  let c = BigInt(plaintext[i]) ** BigInt(e) % BigInt(n);
-  ciphertext.push(Number(c));
+    let c = BigInt(plaintext[i]) ** BigInt(e) % BigInt(n);
+    ciphertext.push(Number(c));
 }
 
 // Decrypt the ciphertext using RSA
 let decrypted = [];
 // Decrypt each code point using modular exponentiation
 for (let i = 0; i < ciphertext.length; i++) {
-  let m = BigInt(ciphertext[i]) ** BigInt(d) % BigInt(n);
-  decrypted.push(Number(m));
+    let m = BigInt(ciphertext[i]) ** BigInt(d) % BigInt(n);
+    decrypted.push(Number(m));
 }
 let plaintext_str = "";
 // Convert the decrypted code points back to characters
 for (let i = 0; i < decrypted.length; i++) {
-  plaintext_str += String.fromCharCode(decrypted[i]);
+    plaintext_str += String.fromCharCode(decrypted[i]);
 }
 
 // Print the original message, encrypted message, and decrypted message
